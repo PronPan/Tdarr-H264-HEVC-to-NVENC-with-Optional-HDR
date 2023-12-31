@@ -1,14 +1,13 @@
 # Tdarr-H264-HEVC-to-NVENC-with-Optional-HDR
 
-This  plugin will transcode H264 or reconvert HEVC files using NVENC with bframes, 10bit, and (optional) HDR. Requires a Turing NVIDIA GPU or newer.  
-  
-If reconvert HEVC is on and the entire file is over the bitrate filter, the HEVC stream will be re-encoded. Typically results in a 50-75% smaller size with little to no quality loss.
+Plugin utilizes code from multiple others such as the generic sort_by_stream_tag plugin, but mostly tws101's Ultimate_GPU_Transcoder_HDR plugin. Credit goes to them for creating the main parts of this plugin. I just heavily tweaked it for higher quality encodes with even smaller sizes, added the tagging function, making HDR optional, and other various edits. 
 
-When setting the re-encode bitrate filter be aware that it is a file total bitrate, so leave overhead for audio.
+This plugin will transcode H264 or reconvert HEVC files using NVENC with bframes, 10bit, and (optional) HDR. Requires a Turing NVIDIA GPU or newer. 
+If reconvert HEVC is on and the entire file is over the bitrate filter, the HEVC stream will be re-encoded. Typically results in a 20-55% smaller size with very little quality loss.
 
-Because of the heavily tweaked ffmpeg encoder settings, HEVC->HEVC reconverting usually results in a higher bitrate than the target bitrate.
+This plugin is designed for processing entire movie libraries, HDR content and all. However, it's not recommended you actually use this to reconvert HDR files as it strips some HDR10/+/Dolby Vision metadata and leaves just PQ. The reconvert_hdr option is more meant to filter out these files rather than actually convert them.
 
-This plugin implements the filter_by_stream_tag plugin to prevent infinite loops caused by that higher bitrate being above target bitrate.
+Because of the heavily tweaked ffmpeg encoder settings, HEVC to HEVC reconverting usually results in a higher bitrate than the target bitrate, but much less than the original. This plugin implements the filter_by_stream_tag plugin to prevent infinite loops caused by that higher bitrate being above target bitrate.
 
 By default, all settings are ideal for most use cases
 
