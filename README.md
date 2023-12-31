@@ -11,7 +11,7 @@ Because of the heavily tweaked ffmpeg encoder settings, HEVC to HEVC reconvertin
 
 By default, all settings are ideal for most use cases
 
-Example screenshots:
+Example screenshots below. You can click on the pictures and zoom in to get a feel for the (very minimal) difference in quality-
 
 ![Screenshot 2023-12-31 152131](https://github.com/PronPan/Tdarr-H264-HEVC-to-NVENC-with-Optional-HDR/assets/5284391/619f1b39-b814-4b1f-b8c7-2ae07416d5a7)
 
