@@ -1,11 +1,11 @@
 # purpan's H264/HEVC to NVENC with Optional HDR
 
+This utilizes code from multiple other plugins, but it's but mostly built off of [tws101's Ultimate_GPU_Transcoder_HDR](https://github.com/HaveAGitGat/Tdarr_Plugins/blob/4e0dd002c249247d338bf52c0595df917532eca7/Community/Tdarr_Plugin_tws101_Ultimate_GPU_Transcoder_HDR.js) plugin. Credit goes to them for creating the main parts of this plugin. I just heavily tweaked it for higher quality encodes with even smaller sizes, added the tagging function, made HDR optional, and added some other various edits. 
+
 ## Installation
 Right click the .js file above and hit "Save link as.." or click the file name and hit the download button. Place the plugin in (main Tdarr directory)/server/Tdarr/plugins/local. Refresh your UI and it will appear under the 'local' plugins tab.
 
 ## Description
-
-This utilizes code from multiple other plugins, but it's but mostly built off of [tws101's Ultimate_GPU_Transcoder_HDR](https://github.com/HaveAGitGat/Tdarr_Plugins/blob/4e0dd002c249247d338bf52c0595df917532eca7/Community/Tdarr_Plugin_tws101_Ultimate_GPU_Transcoder_HDR.js) plugin. Credit goes to them for creating the main parts of this plugin. I just heavily tweaked it for higher quality encodes with even smaller sizes, added the tagging function, made HDR optional, and added some other various edits. 
 
 This plugin will transcode H264 or reconvert HEVC files using NVENC with bframes, 10bit, and (optional) HDR. Requires a Turing NVIDIA GPU or newer. 
 If reconvert HEVC is on and the entire file is over the bitrate filter, the HEVC stream will be re-encoded. Typically results in a 20-55% smaller size with very little quality loss.
