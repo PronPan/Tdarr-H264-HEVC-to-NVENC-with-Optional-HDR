@@ -4,18 +4,19 @@ const details = () => ({
   id: 'Tdarr_Plugin_purpan_H264_HEVC_to_NVENC_optional_HDR',
   Stage: 'Pre-processing',
   Name: 'purpan- H264/HEVC to NVENC with Optional HDR',
+  Stage: 'Pre-processing',
   Type: 'Video',
   Operation: 'Transcode',
   Description:
     `This  plugin will transcode H264 or reconvert HEVC files using NVENC with bframes, 10bit, and (optional) HDR. Requires a Turing NVIDIA GPU or newer.  
     If reconvert HEVC is on and the entire file is over the bitrate filter, the HEVC stream will be re-encoded. Typically results in a 50-75% smaller size with little to no quality loss.
     When setting the re-encode bitrate filter be aware that it is a file total bitrate, so leave overhead for audio.
-    This plugin implements the filter_by_stream_tag plugin to prevent infinite loops caused by reprocessing files above the filter or target bitrate.
-    By default, all settings are ideal for most use cases`,
+	This plugin implements the filter_by_stream_tag plugin to prevent infinite loops caused by reprocessing files above the filter or target bitrate.
+	By default, all settings are ideal for most use cases`,
   //    Original plugin created by tws101 who was inspired by DOOM and MIGZ
   //    This version edited by /u/purpan
   //    Release version 1.0
-  Version: '1.1',
+  Version: '1.0',
   Tags: 'pre-processing,ffmpeg,nvenc h265, hdr',
   Inputs: [
     {
@@ -317,22 +318,31 @@ function loopOverStreamsOfType(file, type, method) {
 
 function checkHDRMetadata(stream, id, inputs, logger, configuration) {
   const hdrColorSpaces = ['smpte2084', 'bt2020', 'bt2020nc'];
+  
+  logger.Add(`Checking HDR Metadata for video stream ${id}`);
+
   if (stream.color_space && hdrColorSpaces.includes(stream.color_space)) {
+    logger.Add(`HDR Color Space detected in video stream ${id}: ${stream.color_space}`);
+
     if (!inputs.reconvert_hdr) {
-      logger.AddError(`HDR Metadata detected in video stream ${id}. Skipping encoding.`);
+      logger.AddError(`HDR Metadata detected in video stream ${id}. Skipping encoding due to reconvert_hdr set to false.`);
       return false; // Returning false to indicate HDR detected but reconvert_hdr is false
     }
+
     logger.AddSuccess(`HDR Metadata detected in video stream ${id}. Maintaining.`);
     
     // Add HDR configuration to the output settings
     if (stream.color_space === 'bt2020nc') {
+      logger.Add(`Applying HDR configuration to stream ${id}: -color_primaries bt2020 -colorspace bt2020nc -color_trc smpte2084`);
       configuration.AddOutputSetting(' -color_primaries bt2020 -colorspace bt2020nc -color_trc smpte2084 ');
     }
+
     return true; // HDR detected and reconvert_hdr is true, continue encoding
   }
+
+  logger.Add(`No HDR Metadata detected in video stream ${id}. Continuing encoding.`);
   return true; // HDR not detected, continue encoding
 }
-
 
 /**
  * Video, Map EVERYTHING and encode video streams to 265
@@ -344,27 +354,27 @@ function buildVideoConfiguration(inputs, file, logger) {
     '480p': {
       bitrate: inputs.target_bitrate_480p576p,
       max_increase: 100,
-      cq: 20,
+      cq: 24,
     },
     '576p': {
       bitrate: inputs.target_bitrate_480p576p,
       max_increase: 100,
-      cq: 20
+      cq: 24
     },
     '720p': {
       bitrate: inputs.target_bitrate_720p,
       max_increase: 200,
-      cq: 22
+      cq: 25
     },
     '1080p': {
       bitrate: inputs.target_bitrate_1080p,
       max_increase: 400,
-      cq: 24
+      cq: 26
     },
     '4KUHD': {
       bitrate: inputs.target_bitrate_4KUHD,
       max_increase: 400,
-      cq: 26,
+      cq: 27 ,
     },
     Other: {
       bitrate: inputs.target_bitrate_1080p,
@@ -385,9 +395,14 @@ function buildVideoConfiguration(inputs, file, logger) {
   };
 
   function videoProcess(stream, id) {
-	
+
     if (stream.codec_name === 'mjpeg') {
       configuration.AddOutputSetting(`-map -v:${id}`);
+      return;
+    }
+
+    if (!checkHDRMetadata(stream, id, inputs, logger, configuration)) {
+	  // If HDR detected and reconvert_hdr is false, skip encoding
       return;
     }
 
@@ -425,7 +440,7 @@ function buildVideoConfiguration(inputs, file, logger) {
 	}
 
     const bool480 = reconvertcheck(filterBitrate480, res480p, res576p);
-    const bool720 = reconvertcheck(filterBitrate720, res720p);3
+    const bool720 = reconvertcheck(filterBitrate720, res720p);
     const bool1080 = reconvertcheck(filterBitrate1080, res1080p);
     const bool4k = reconvertcheck(filterBitrate4k, res4k);
 
@@ -433,10 +448,6 @@ function buildVideoConfiguration(inputs, file, logger) {
       return;
     }
 
-    if (!checkHDRMetadata(stream, id, inputs, logger, configuration)) {
-	  // If HDR detected and reconvert_hdr is false, skip encoding
-      return;
-    }
 
     // remove png streams.
     if (stream.codec_name === 'png') {
@@ -461,7 +472,7 @@ function buildVideoConfiguration(inputs, file, logger) {
 
       const bitrateMax = bitrateTarget + tier.max_increase;
       const { cq } = tier;
-	
+
       // transcode all video streams that made it this far
       configuration.AddOutputSetting(`-c:v hevc_nvenc -pix_fmt:v p010le -profile:v main10 -qmin 0 -cq:v ${cq} -b:v ${bitrateTarget}k -maxrate:v ${bitrateMax}k -preset slow -rc-lookahead 32 -spatial_aq:v 1 -aq-strength:v 10 -metadata:s:v:0 COPYRIGHT=processed`);
       configuration.AddInputSetting(inputSettings[file.video_codec_name]);
