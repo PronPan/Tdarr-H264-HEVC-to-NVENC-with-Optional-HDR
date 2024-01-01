@@ -1,6 +1,9 @@
 # purpan's H264/HEVC to NVENC with Optional HDR
 
-Place the plugin in (main Tdarr directory)/server/Tdarr/plugins/local. Refresh your UI and it will appear under the 'local' plugins tab.
+## Installation
+Right click the .js file above and hit "Save link as.." or click the file name and hit the download button. Place the plugin in (main Tdarr directory)/server/Tdarr/plugins/local. Refresh your UI and it will appear under the 'local' plugins tab.
+
+## Description
 
 This utilizes code from multiple other plugins, but it's but mostly built off of [tws101's Ultimate_GPU_Transcoder_HDR](https://github.com/HaveAGitGat/Tdarr_Plugins/blob/4e0dd002c249247d338bf52c0595df917532eca7/Community/Tdarr_Plugin_tws101_Ultimate_GPU_Transcoder_HDR.js) plugin. Credit goes to them for creating the main parts of this plugin. I just heavily tweaked it for higher quality encodes with even smaller sizes, added the tagging function, made HDR optional, and added some other various edits. 
 
@@ -13,10 +16,22 @@ Because of the heavily tweaked ffmpeg encoder settings, HEVC to HEVC reconvertin
 
 By default, all settings are ideal for most use cases.
 
-Example screenshots below. You can click on the pictures and zoom in to get a feel for the (very minimal) difference in quality-
+## Screenshots and previews
+
+You can click on the pictures and zoom in to get a feel for the (very minimal) difference in quality. *Disclaimer* the % reduction in these pictures is inaccurate. Use the GB/mbps numbers for comparison instead-
+
+### Full frames
 
 ![Screenshot 2023-12-31 152131](https://github.com/PronPan/Tdarr-H264-HEVC-to-NVENC-with-Optional-HDR/assets/5284391/619f1b39-b814-4b1f-b8c7-2ae07416d5a7)
 
 ![Screenshot 2023-12-31 152201](https://github.com/PronPan/Tdarr-H264-HEVC-to-NVENC-with-Optional-HDR/assets/5284391/ddabcd0a-ffc6-43a5-898a-cdbcb3dd665c)
 
 ![Screenshot 2023-12-31 152216](https://github.com/PronPan/Tdarr-H264-HEVC-to-NVENC-with-Optional-HDR/assets/5284391/5a201de8-b878-439b-b229-f5b5d257ea2c)
+
+### Zoomed and cropped frames from dark scenes with motion
+
+![theoutsiders](https://github.com/PronPan/Tdarr-H264-HEVC-to-NVENC-with-Optional-HDR/assets/5284391/2156b4e3-5cf3-40d6-a166-228ed1f190ec)
+
+![thenun](https://github.com/PronPan/Tdarr-H264-HEVC-to-NVENC-with-Optional-HDR/assets/5284391/ed5511ef-56ec-4203-bdd0-47d6f7bdb9c3)
+
+
