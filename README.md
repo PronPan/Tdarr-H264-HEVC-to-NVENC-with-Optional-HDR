@@ -7,7 +7,7 @@ If reconvert HEVC is on and the entire file is over the bitrate filter, the HEVC
 
 This plugin is designed for processing entire movie libraries, HDR content and all. However, it's not recommended you actually use this to reconvert HDR files as it strips some HDR10/+/Dolby Vision metadata and leaves just PQ. The reconvert_hdr option is more meant to filter out these files rather than actually convert them.
 
-Because of the heavily tweaked ffmpeg encoder settings, HEVC to HEVC reconverting usually results in a higher bitrate than the target bitrate, but much less than the original. This plugin implements the filter_by_stream_tag plugin to prevent infinite loops caused by that higher bitrate being above target bitrate.
+Because of the heavily tweaked ffmpeg encoder settings, HEVC to HEVC reconverting somtimes results in a higher bitrate than the target bitrate, but much less than the original. This plugin implements the filter_by_stream_tag plugin to prevent infinite loops caused by that higher bitrate being above target bitrate.
 
 By default, all settings are ideal for most use cases
 
