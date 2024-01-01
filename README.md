@@ -1,4 +1,4 @@
-#purpan's H264/HEVC to NVENC with Optional HDR
+# purpan's H264/HEVC to NVENC with Optional HDR
 
 Plugin utilizes code from multiple others such as the generic sort_by_stream_tag plugin, but mostly [tws101's Ultimate_GPU_Transcoder_HDR](https://github.com/HaveAGitGat/Tdarr_Plugins/blob/4e0dd002c249247d338bf52c0595df917532eca7/Community/Tdarr_Plugin_tws101_Ultimate_GPU_Transcoder_HDR.js) plugin. Credit goes to them for creating the main parts of this plugin. I just heavily tweaked it for higher quality encodes with even smaller sizes, added the tagging function, made HDR optional, and added some other various edits. 
 
