@@ -20,7 +20,7 @@ By default, all settings are ideal for most use cases.
 
 You can click on the pictures and zoom in to get a feel for the (very minimal) difference in quality.
 
-**Disclaimer**: the % reduction in these pictures is inaccurate. Use the GB/mbps numbers for comparison instead-
+**Disclaimer: the % reduction in these pictures is inaccurate.** Use the GB/mbps numbers for comparison instead-
 
 ### Full frames
 
