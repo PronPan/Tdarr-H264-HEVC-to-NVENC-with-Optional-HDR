@@ -5,6 +5,8 @@ This utilizes code from multiple other plugins, but it's but mostly built off of
 ## Installation
 Right click the .js file above and hit "Save link as.." or click the file name and hit the download button. Place the plugin in (main Tdarr directory)/server/Tdarr/plugins/local. Refresh your UI and it will appear under the 'local' plugins tab.
 
+**Make sure to add Migz-Remove-Image-formats-from-file _before_ this plugin. Otherwise it will attempt to remove the image formats itself, but it will go very slow.**
+
 ## Description
 
 This plugin will transcode H264 or reconvert HEVC files using NVENC with bframes, 10bit, and (optional) HDR. Requires a Turing NVIDIA GPU or newer. 
