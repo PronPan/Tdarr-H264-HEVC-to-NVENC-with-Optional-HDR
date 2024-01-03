@@ -4,7 +4,6 @@ const details = () => ({
   id: 'Tdarr_Plugin_purpan_H264_HEVC_to_NVENC_optional_HDR',
   Stage: 'Pre-processing',
   Name: 'purpan- H264/HEVC to NVENC with Optional HDR',
-  Stage: 'Pre-processing',
   Type: 'Video',
   Operation: 'Transcode',
   Description:
