@@ -14,8 +14,8 @@ const details = () => ({
 	By default, all settings are ideal for most use cases`,
   //    Original plugin created by tws101 who was inspired by DOOM and MIGZ
   //    This version edited by /u/purpan
-  //    Release version 1.0
-  Version: '1.0',
+  //    Release version 1.1
+  Version: '1.1',
   Tags: 'pre-processing,ffmpeg,nvenc h265, hdr',
   Inputs: [
     {
