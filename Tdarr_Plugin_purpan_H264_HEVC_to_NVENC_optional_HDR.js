@@ -334,7 +334,7 @@ function checkHDRMetadata(stream, id, inputs, logger, configuration) {
     // Add HDR configuration to the output settings
     if (stream.color_space === 'bt2020nc') {
       logger.Add(`Applying HDR configuration to stream ${id}: -color_primaries bt2020 -colorspace bt2020nc -color_trc smpte2084`);
-      configuration.AddOutputSetting(' -color_primaries bt2020 -colorspace bt2020nc -color_trc smpte2084 ');
+      configuration.AddOutputSetting(' -strict unofficial -color_primaries bt2020 -colorspace bt2020nc -color_trc smpte2084 ');
     }
 
     return true; // HDR detected and reconvert_hdr is true, continue encoding
@@ -474,7 +474,7 @@ function buildVideoConfiguration(inputs, file, logger) {
       const { cq } = tier;
 
       // transcode all video streams that made it this far
-      configuration.AddOutputSetting(`-c:v hevc_nvenc -pix_fmt:v p010le -profile:v main10 -qmin 0 -cq:v ${cq} -b:v ${bitrateTarget}k -maxrate:v ${bitrateMax}k -preset slow -rc-lookahead 32 -spatial_aq:v 1 -aq-strength:v 10 -metadata:s:v:0 COPYRIGHT=processed`);
+      configuration.AddOutputSetting(`-c:v hevc_nvenc -profile:v main10 -pix_fmt:v p010le -qmin 0 -cq:v ${cq} -b:v ${bitrateTarget}k -maxrate:v ${bitrateMax}k -preset slow -rc-lookahead 32 -spatial_aq:v 1 -aq-strength:v 10 -metadata:s:v:0 COPYRIGHT=processed`);
       configuration.AddInputSetting(inputSettings[file.video_codec_name]);
       if (file.video_codec_name === 'h264' && file.ffProbeData.streams[0].profile !== 'High 10' && file.ffProbeData.streams[0].profile !== 'High 4:4:4 Predictive') {
         configuration.AddInputSetting('-c:v h264_cuvid');
