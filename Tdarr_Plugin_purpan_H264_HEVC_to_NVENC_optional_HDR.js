@@ -63,7 +63,20 @@ const details = () => ({
       },
       tooltip: 'Specify the target reduction for H264 bitrates if the current bitrate is less than resolution targets.',
     },
-	  {
+    {
+      name: 'bframes',
+      type: 'boolean',
+      defaultValue: false,
+      inputUI: {
+        type: 'dropdown',
+        options: [
+          'false',
+          'true',
+        ],
+      },
+      tooltip: 'Enables or disables bframes from being used. Sacrifices some detail for better compression. Requires NVIDIA Turing card or newer',
+    },
+	{
       name: 'reconvert_hevc',
       type: 'boolean',
       defaultValue: true,
@@ -76,7 +89,7 @@ const details = () => ({
       },
       tooltip: 'Will reconvert hevc files that are above the hevc_resolution_filter_bitrate',
     },
-	  {
+	{
       name: 'reconvert_hdr',
       type: 'boolean',
       defaultValue: false,
@@ -124,19 +137,6 @@ const details = () => ({
         type: 'text',
       },
       tooltip: 'Filter bitrate in kilobits to reconvert_4KUHD_hevc. Example 1200 equals 1200k',
-    },
-    {
-      name: 'bframes',
-      type: 'boolean',
-      defaultValue: true,
-      inputUI: {
-        type: 'dropdown',
-        options: [
-          'false',
-          'true',
-        ],
-      },
-      tooltip: 'Enables or disabled bframes from being used. Requires NVIDIA Turing card or newer',
     },
 	    {
       name: 'tagName',
@@ -353,32 +353,32 @@ function buildVideoConfiguration(inputs, file, logger) {
     '480p': {
       bitrate: inputs.target_bitrate_480p576p,
       max_increase: 100,
-      cq: 24,
+      cq: 22,
     },
     '576p': {
       bitrate: inputs.target_bitrate_480p576p,
       max_increase: 100,
-      cq: 24
+      cq: 22
     },
     '720p': {
       bitrate: inputs.target_bitrate_720p,
       max_increase: 200,
-      cq: 25
+      cq: 23
     },
     '1080p': {
       bitrate: inputs.target_bitrate_1080p,
       max_increase: 400,
-      cq: 26
+      cq: 24
     },
     '4KUHD': {
       bitrate: inputs.target_bitrate_4KUHD,
       max_increase: 400,
-      cq: 27 ,
+      cq: 26 ,
     },
     Other: {
       bitrate: inputs.target_bitrate_1080p,
       max_increase: 400,
-      cq: 28,
+      cq: 24,
     },
   };
 
@@ -473,7 +473,7 @@ function buildVideoConfiguration(inputs, file, logger) {
       const { cq } = tier;
 
       // transcode all video streams that made it this far
-      configuration.AddOutputSetting(`-c:v hevc_nvenc -profile:v main10 -pix_fmt:v p010le -qmin 0 -cq:v ${cq} -b:v ${bitrateTarget}k -maxrate:v ${bitrateMax}k -preset slow -rc-lookahead 32 -spatial_aq:v 1 -aq-strength:v 10 -metadata:s:v:0 COPYRIGHT=processed`);
+      configuration.AddOutputSetting(`-c:v hevc_nvenc -profile:v main10 -pix_fmt:v p010le -qmin 0 -cq:v ${cq} -b:v ${bitrateTarget}k -maxrate:v ${bitrateMax}k -preset slow -rc-lookahead 32 -spatial_aq:v 1 -aq-strength:v 15 -metadata:s:v:0 COPYRIGHT=processed`);
       configuration.AddInputSetting(inputSettings[file.video_codec_name]);
       if (file.video_codec_name === 'h264' && file.ffProbeData.streams[0].profile !== 'High 10' && file.ffProbeData.streams[0].profile !== 'High 4:4:4 Predictive') {
         configuration.AddInputSetting('-c:v h264_cuvid');
@@ -552,8 +552,8 @@ function checkTags(file, inputs) {
         console.log(`${message} been found but continue_if_tag_found is True. Continuing to encoding.`);
       } else {
         response.processFile = true; // Continue encoding if tag not found
-        response.infoLog += `${message} not found and continue_if_tag_found is True. Continuing to encoding.  \n`;
-        console.log(`${message} not found and continue_if_tag_found is True. Continuing to encoding.`);
+        response.infoLog += `${message} not been found and continue_if_tag_found is True. Continuing to encoding.  \n`;
+        console.log(`${message} not been found and continue_if_tag_found is True. Continuing to encoding.`);
       }
     } else if (inputs.continueIfTagFound === false) {
       if (streamContainsTag === true) {
@@ -562,8 +562,8 @@ function checkTags(file, inputs) {
         console.log(`${message} been found and continue_if_tag_found is False. Skipping encoding.`);
       } else {
         response.processFile = true; // Resume encoding if tag not found
-        response.infoLog += `${message} not found and continue_if_tag_found is False. Continuing to encoding. \n`;
-        console.log(`${message} not found and continue_if_tag_found is False. Continuing to encoding.`);
+        response.infoLog += `${message} not been found and continue_if_tag_found is False. Continuing to encoding. \n`;
+        console.log(`${message} not been found and continue_if_tag_found is False. Continuing to encoding.`);
       }
     }
   } catch (err) {
