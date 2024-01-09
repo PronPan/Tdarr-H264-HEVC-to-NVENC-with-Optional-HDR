@@ -12,9 +12,9 @@ Right click the .js file above and hit "Save link as.." or click the file name a
 This plugin will transcode H264 or reconvert HEVC files using NVENC with bframes, 10bit, and (optional) HDR. Requires a Turing NVIDIA GPU or newer. 
 If reconvert HEVC is on and the entire file is over the bitrate filter, the HEVC stream will be re-encoded. Typically results in a 20-55% smaller size with very little quality loss.
 
-This plugin is designed for processing entire movie libraries, HDR content and all. **However, _it's not recommended you actually use this to reconvert HDR files as it strips some HDR10/+/Dolby Vision metadata and leaves just PQ. The reconvert_hdr option is more meant to filter out these files rather than actually convert them_.**
+This plugin is designed for processing entire movie libraries, HDR content and all. **However, it's not recommended you actually use this to reconvert HDR files as it strips some HDR10/+/Dolby Vision metadata and leaves just PQ. The reconvert_hdr option is more meant to filter out these files rather than actually convert them.**
 
-Because of the heavily tweaked ffmpeg encoder settings, HEVC to HEVC reconverting somtimes results in a higher bitrate than the specified target bitrate, but much less than the original file's. This plugin implements the filter_by_stream_tag plugin to prevent infinite loops caused by that higher bitrate being above target bitrate.
+Because of the heavily tweaked ffmpeg encoder settings, HEVC to HEVC reconverting somtimes results in a higher bitrate than the specified target bitrate, but much less than the original file's. This plugin implements the filter_by_stream_tag plugin to prevent infinite loops caused by that higher bitrate being above that target bitrate.
 
 By default, all settings are ideal for most use cases.
 
