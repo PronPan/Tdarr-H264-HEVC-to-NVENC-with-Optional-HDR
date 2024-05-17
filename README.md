@@ -3,7 +3,7 @@
 This utilizes code from multiple other plugins, but it's but mostly built off of [tws101's Ultimate_GPU_Transcoder_HDR](https://github.com/HaveAGitGat/Tdarr_Plugins/blob/4e0dd002c249247d338bf52c0595df917532eca7/Community/Tdarr_Plugin_tws101_Ultimate_GPU_Transcoder_HDR.js) plugin. I heavily tweaked it for higher quality encodes with even smaller sizes, added the tagging function, changed HDR to be optional, and made some other various edits, but most of the credit goes to them.
 
 ## Installation
-Right click the .js file above and hit "Save link as.." or click the file name and hit the download button. Place the plugin in (main Tdarr directory)/server/Tdarr/plugins/local. Refresh your UI and it will appear under the 'local' plugins tab.
+Click the file name above and hit the download button. Place the plugin in (main Tdarr directory)/server/Tdarr/plugins/local. Refresh your UI and it will appear under the 'local' plugins tab.
 
 **Make sure to add Migz-Remove-Image-formats-from-file _before_ this plugin. Otherwise it will attempt to remove the image formats itself, but it will go very slow.**
 
